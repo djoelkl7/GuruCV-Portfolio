@@ -89,14 +89,14 @@ export default function ProfileCard({ onHireMe }: ProfileCardProps) {
           <h1 className="text-3xl font-display font-bold text-white mb-1 tracking-tight">
             Johnathan <span className="text-primary font-normal">Doe</span>
           </h1>
-          <p className="text-primary text-[10px] font-bold tracking-[4px] uppercase mb-8 opacity-80 overflow-hidden relative inline-block">
+          <div className="text-primary text-[10px] font-bold tracking-[4px] uppercase mb-8 opacity-80 overflow-hidden relative inline-block">
             Full Stack Developer
             <motion.div 
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
               className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"
             />
-          </p>
+          </div>
         </motion.div>
 
         {/* Social Links */}
