@@ -108,13 +108,14 @@ export default function Works() {
               transition={{ duration: 0.4, ease: 'circOut' }}
               className="group relative h-72 rounded-3xl overflow-hidden bg-zinc-900 border border-white/5 hover:border-primary/50 transition-colors duration-500"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 to-accent/0 group-hover:from-primary/10 group-hover:to-accent/10 transition-colors duration-500 z-10 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/0 via-accent/0 to-secondary/0 group-hover:from-primary/20 group-hover:via-accent/10 group-hover:to-secondary/5 transition-all duration-700 z-10 pointer-events-none" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10 pointer-events-none shadow-[inset_0_0_50px_rgba(255,140,0,0.15)]" />
               
               <motion.img 
                 src={work.image} 
                 alt={work.title}
-                whileHover={{ scale: 1.15, rotate: -1 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
+                whileHover={{ scale: 1.1, rotate: -0.5 }}
+                transition={{ duration: 1, ease: [0.33, 1, 0.68, 1] }}
                 className="w-full h-full object-cover"
               />
               
@@ -144,11 +145,19 @@ export default function Works() {
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 bg-primary text-dark py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-[2px] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-primary/20"
                   >
-                    View Project <ExternalLink size={14} />
+                    View Project <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </a>
-                  <button className="w-11 h-11 flex items-center justify-center bg-white/10 text-white rounded-xl hover:bg-white hover:text-dark transition-all border border-white/10">
-                    <Search size={18} />
-                  </button>
+                  <a 
+                    href={work.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/search w-11 h-11 flex items-center justify-center bg-white/10 text-white rounded-xl hover:bg-white hover:text-dark transition-all border border-white/10 relative"
+                  >
+                    <Search size={18} className="group-hover/search:scale-110 transition-transform" />
+                    <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-white text-dark text-[10px] font-bold rounded-lg opacity-0 group-hover/search:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                      Preview Image
+                    </span>
+                  </a>
                 </div>
               </div>
             </motion.div>

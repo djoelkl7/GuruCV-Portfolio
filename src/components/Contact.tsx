@@ -1,11 +1,37 @@
 import SectionWrapper from './SectionWrapper';
 import { Mail, MapPin, Phone, Send, Copy, Check } from 'lucide-react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const emails = ['ddmguru@gmail.com', 'ddmguru@aol.com'];
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [errors, setErrors] = useState({ email: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({ email: '' });
+
+    if (!validateEmail(formData.email)) {
+      setErrors({ email: 'Please enter a valid email address.' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setSubmitStatus('success');
+    setIsSubmitting(false);
+    setFormData({ name: '', email: '', message: '' });
+    setTimeout(() => setSubmitStatus('idle'), 3000);
+  };
 
   const handleCopy = async (text: string) => {
     try {
@@ -99,11 +125,14 @@ export default function Contact() {
         </div>
 
         {/* Contact Form */}
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-4">
             <div className="relative group">
               <input 
                 type="text" 
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Full Name" 
                 className="w-full bg-white/5 border border-border rounded-xl py-4 px-6 text-sm placeholder:text-white/20 focus:outline-none focus:border-primary transition-colors hover:bg-white/10"
               />
@@ -111,21 +140,56 @@ export default function Contact() {
             <div className="relative group">
               <input 
                 type="email" 
+                required
+                value={formData.email}
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                  if (errors.email) setErrors({ email: '' });
+                }}
                 placeholder="Email Address" 
-                className="w-full bg-white/5 border border-border rounded-xl py-4 px-6 text-sm placeholder:text-white/20 focus:outline-none focus:border-primary transition-colors hover:bg-white/10"
+                className={`w-full bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-border'} rounded-xl py-4 px-6 text-sm placeholder:text-white/20 focus:outline-none focus:border-primary transition-colors hover:bg-white/10`}
               />
+              <AnimatePresence>
+                {errors.email && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-[10px] text-red-400 mt-2 ml-2 font-medium uppercase tracking-wider"
+                  >
+                    {errors.email}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </div>
             <div className="relative group">
               <textarea 
                 rows={4}
+                required
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Your Message" 
-                className="w-full bg-white/5 border border-border rounded-xl py-4 px-6 text-sm placeholder:text-white/20 focus:outline-none focus:border-primary transition-colors hover:bg-white/10"
+                className="w-full bg-white/5 border border-border rounded-xl py-4 px-6 text-sm placeholder:text-white/20 focus:outline-none focus:border-primary transition-colors hover:bg-white/10 resize-none"
               />
             </div>
           </div>
-          <button className="w-full py-4 bg-primary text-dark font-bold text-[11px] uppercase tracking-[3px] rounded-xl overflow-hidden relative group transition-transform active:scale-95">
+          <button 
+            type="submit"
+            disabled={isSubmitting}
+            className={`w-full py-4 ${submitStatus === 'success' ? 'bg-secondary' : 'bg-primary'} text-dark font-bold text-[11px] uppercase tracking-[3px] rounded-xl overflow-hidden relative group transition-all active:scale-95 disabled:opacity-50`}
+          >
             <span className="relative z-10 flex items-center justify-center gap-2">
-              Send Message <Send size={14} />
+              {isSubmitting ? (
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                  className="w-4 h-4 border-2 border-dark border-t-transparent rounded-full"
+                />
+              ) : submitStatus === 'success' ? (
+                <>Message Sent <Check size={14} /></>
+              ) : (
+                <>Send Message <Send size={14} /></>
+              )}
             </span>
             <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
           </button>

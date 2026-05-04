@@ -131,14 +131,24 @@ export default function ProfileCard({ onHireMe }: ProfileCardProps) {
           transition={{ delay: 1 }}
           className="flex justify-center gap-5 mb-10"
         >
-          {[Github, Twitter, Linkedin, Instagram].map((Icon, i) => (
+          {[
+            { Icon: Github, href: "https://github.com/ddmguru", label: "GitHub" },
+            { Icon: Twitter, href: "https://twitter.com/ddmguru", label: "Twitter" },
+            { Icon: Linkedin, href: "https://linkedin.com/in/ddmguru", label: "LinkedIn" },
+            { Icon: Instagram, href: "https://instagram.com/ddmguru", label: "Instagram" }
+          ].map(({ Icon, href, label }, i) => (
             <motion.a
-              key={i}
-              href="#"
-              whileHover={{ y: -4, scale: 1.2 }}
-              className="text-white/40 hover:text-primary transition-all p-1"
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ y: -5, scale: 1.2 }}
+              className="group/icon relative text-white/40 hover:text-primary transition-all p-1"
             >
               <Icon size={20} />
+              <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-white text-dark text-[10px] font-bold rounded-lg opacity-0 group-hover/icon:opacity-100 transition-opacity whitespace-nowrap shadow-2xl pointer-events-none">
+                {label}
+              </span>
             </motion.a>
           ))}
         </motion.div>
@@ -154,24 +164,20 @@ export default function ProfileCard({ onHireMe }: ProfileCardProps) {
         >
           <button 
             onClick={handleDownloadCV}
-            className="relative group overflow-hidden bg-white/5 hover:bg-primary py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-white hover:text-dark transition-all duration-300 uppercase border border-white/5 shadow-lg active:scale-95"
+            className="group relative overflow-hidden bg-white/5 hover:bg-white/10 py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-white transition-all duration-300 uppercase border border-white/5 shadow-lg active:scale-95"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
-              Download Resume <Download size={14} />
+              Download Resume <Download size={14} className="group-hover:translate-y-0.5 transition-transform" />
             </span>
           </button>
           <button 
             onClick={onHireMe}
-            className="relative group overflow-hidden bg-primary py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-dark transition-all duration-300 uppercase shadow-[0_0_20px_rgba(255,140,0,0.2)] hover:shadow-[0_0_30px_rgba(255,140,0,0.4)] active:scale-95"
+            className="relative group overflow-hidden bg-primary py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-dark transition-all duration-300 uppercase shadow-[0_0_20px_rgba(255,140,0,0.3)] hover:scale-[1.02] active:scale-95"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
-              Hire Me <ChevronRight size={14} />
+              Hire Me <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </span>
-            <motion.div 
-              animate={{ opacity: [0.1, 0.3, 0.1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute inset-0 bg-white"
-            />
+            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
           </button>
         </motion.div>
       </div>

@@ -77,7 +77,7 @@ export default function Blog() {
                   <h4 className="text-xl font-display font-bold text-white group-hover:text-primary transition-colors duration-300 leading-tight">
                     {post.title}
                   </h4>
-                  <div className="text-primary mt-1 shrink-0 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                  <div className="text-primary mt-1 shrink-0 transition-all duration-500 group-hover:scale-125 group-hover:rotate-45">
                     <ArrowUpRight size={20} />
                   </div>
                 </div>
@@ -94,9 +94,9 @@ export default function Blog() {
           >
             <button 
               onClick={() => setSelectedPost(null)}
-              className="flex items-center gap-2 text-primary text-[10px] font-bold uppercase tracking-widest mb-8 hover:text-white transition-colors"
+              className="group/back flex items-center gap-2 text-primary text-[10px] font-bold uppercase tracking-widest mb-8 hover:text-white transition-colors"
             >
-              <ChevronLeft size={16} /> Back to list
+              <ChevronLeft size={16} className="group-hover/back:-translate-x-1 transition-transform" /> Back to list
             </button>
 
             <div className="h-64 md:h-80 rounded-3xl overflow-hidden mb-8 shadow-2xl border border-border">
