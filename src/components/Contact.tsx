@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from 'motion/react';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
-  const email = 'hello@johndoe.dev';
+  const emails = ['ddmguru@gmail.com', 'ddmguru@aol.com'];
 
-  const handleCopy = async () => {
+  const handleCopy = async (text: string) => {
     try {
-      await navigator.clipboard.writeText(email);
+      await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -28,7 +28,7 @@ export default function Contact() {
             </div>
             <div>
               <h4 className="text-sm font-bold uppercase tracking-widest mb-1 text-white/90">Address</h4>
-              <p className="text-xs text-white/40">Minneapolis, Minnesota, USA</p>
+              <p className="text-xs text-white/40">Ologuneru Ibadan, NIGERIA</p>
             </div>
           </div>
           
@@ -38,57 +38,56 @@ export default function Contact() {
             </div>
             <div className="flex-1">
               <h4 className="text-sm font-bold uppercase tracking-widest mb-1 text-white/90">Email</h4>
-              <div className="flex items-center gap-3">
-                <p className="text-xs text-white/40">{email}</p>
-                <button 
-                  onClick={handleCopy}
-                  className="p-1.5 rounded-md hover:bg-white/5 transition-colors text-white/20 hover:text-primary relative"
-                  title="Copy to clipboard"
-                >
-                  <AnimatePresence mode="wait">
-                    {copied ? (
-                      <motion.div
-                        key="check"
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.5, opacity: 0 }}
-                      >
-                        <Check size={14} className="text-primary" />
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="copy"
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.5, opacity: 0 }}
-                      >
-                        <Copy size={14} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                  
-                  {copied && (
-                    <motion.span 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: -20 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-bold text-primary"
+              <div className="space-y-3">
+                {emails.map((email) => (
+                  <div key={email} className="flex items-center gap-3">
+                    <p className="text-xs text-white/40">{email}</p>
+                    <button 
+                      onClick={() => handleCopy(email)}
+                      className="p-1.5 rounded-md hover:bg-white/5 transition-colors text-white/20 hover:text-primary relative"
+                      title="Copy to clipboard"
                     >
-                      COPIED!
-                    </motion.span>
-                  )}
-                </button>
+                      <AnimatePresence mode="wait">
+                        {copied ? (
+                          <motion.div
+                            key="check"
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.5, opacity: 0 }}
+                          >
+                            <Check size={14} className="text-primary" />
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key="copy"
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.5, opacity: 0 }}
+                          >
+                            <Copy size={14} />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
           <div className="flex gap-4">
-            <div className="w-12 h-12 bg-white/5 border border-border rounded-xl flex items-center justify-center text-primary shrink-0">
+            <div className="w-12 h-12 bg-white/5 border border-border rounded-xl flex items-center justify-center text-primary shrink-0 transition-all group-hover:scale-110">
               <Phone size={20} />
             </div>
-            <div>
-              <h4 className="text-sm font-bold uppercase tracking-widest mb-1">Phone</h4>
-              <p className="text-xs text-white/40">+1 (555) 123-4567</p>
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-sm font-bold uppercase tracking-widest mb-1 text-white/90 underline decoration-primary/30 underline-offset-4">Whatsapp</h4>
+                <p className="text-xs text-white/40 tracking-wider">+234 706 281 8494</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold uppercase tracking-widest mb-1 text-white/90 underline decoration-secondary/30 underline-offset-4">Mobile</h4>
+                <p className="text-xs text-white/40 tracking-wider">+234 704 563 4693</p>
+              </div>
             </div>
           </div>
 

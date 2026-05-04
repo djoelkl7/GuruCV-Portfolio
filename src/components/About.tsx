@@ -33,7 +33,7 @@ export default function About() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <div className="space-y-4 text-white/70 text-sm leading-relaxed">
           <p>
-            Hello! I'm Johnathan Doe. I'm a passionate Full Stack Developer with 5+ years of experience 
+            Hello! I'm DDmGurU. I'm a passionate Full Stack Developer with 5+ years of experience 
             creating web applications that are both beautiful and efficient.
           </p>
           <p>

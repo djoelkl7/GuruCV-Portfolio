@@ -1,19 +1,30 @@
 import { motion } from 'motion/react';
 import { Github, Twitter, Linkedin, Instagram, Download, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface ProfileCardProps {
   onHireMe?: () => void;
 }
 
 export default function ProfileCard({ onHireMe }: ProfileCardProps) {
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const roles = ["Web Designer", "Blogger", "Freelancer", "Photographer"];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleDownloadCV = () => {
     // Creating a dummy content for demonstration
-    const cvContent = "Johnathan Doe - Full Stack Developer\nPortfolio: " + window.location.href;
+    const cvContent = "DDmGurU - Full Stack Developer\nPortfolio: " + window.location.href;
     const blob = new Blob([cvContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'Johnathan_Doe_CV.txt';
+    link.download = 'DDmGurU_Resume.txt';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -53,7 +64,7 @@ export default function ProfileCard({ onHireMe }: ProfileCardProps) {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute inset-0 bg-primary blur-3xl rounded-full"
+              className="absolute inset-0 bg-gradient-to-tr from-primary via-secondary to-accent blur-3xl rounded-full"
             />
             
             <motion.div 
@@ -87,14 +98,28 @@ export default function ProfileCard({ onHireMe }: ProfileCardProps) {
           transition={{ delay: 0.8 }}
         >
           <h1 className="text-3xl font-display font-bold text-white mb-1 tracking-tight">
-            Johnathan <span className="text-primary font-normal">Doe</span>
+            DDmGurU
           </h1>
-          <div className="text-primary text-[10px] font-bold tracking-[4px] uppercase mb-8 opacity-80 overflow-hidden relative inline-block">
-            Full Stack Developer
+          <div className="text-primary text-[10px] font-bold tracking-[4px] uppercase mb-8 opacity-80 overflow-hidden relative inline-block h-4">
+            <motion.span
+              key={currentRoleIndex}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.5 }}
+              className="inline-block"
+            >
+              {roles[currentRoleIndex]}
+            </motion.span>
+            <motion.span 
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+              className="inline-block ml-1 border-l-2 border-primary h-3 translate-y-[1px]"
+            />
             <motion.div 
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary to-transparent"
+              className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-primary via-secondary to-accent"
             />
           </div>
         </motion.div>
@@ -132,12 +157,12 @@ export default function ProfileCard({ onHireMe }: ProfileCardProps) {
             className="relative group overflow-hidden bg-white/5 hover:bg-primary py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-white hover:text-dark transition-all duration-300 uppercase border border-white/5 shadow-lg active:scale-95"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
-              Download CV <Download size={14} />
+              Download Resume <Download size={14} />
             </span>
           </button>
           <button 
             onClick={onHireMe}
-            className="relative group overflow-hidden bg-primary py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-dark transition-all duration-300 uppercase shadow-[0_0_20px_rgba(120,204,109,0.2)] hover:shadow-[0_0_30px_rgba(120,204,109,0.4)] active:scale-95"
+            className="relative group overflow-hidden bg-primary py-4 px-2 rounded-xl text-[10px] font-bold tracking-[2px] text-dark transition-all duration-300 uppercase shadow-[0_0_20px_rgba(255,140,0,0.2)] hover:shadow-[0_0_30px_rgba(255,140,0,0.4)] active:scale-95"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               Hire Me <ChevronRight size={14} />

@@ -31,7 +31,7 @@ export default function Sidebar({ activeSection, onSectionChange }: SidebarProps
               onClick={() => onSectionChange(item.id as SectionId)}
               className={`
                 group relative p-3 rounded-xl transition-all duration-300 flex items-center justify-center
-                ${isActive ? 'bg-primary text-dark shadow-[0_0_15px_rgba(120,204,109,0.3)]' : 'text-white/60 hover:text-primary hover:bg-white/5'}
+                ${isActive ? 'bg-primary text-dark shadow-[0_0_15px_rgba(255,140,0,0.3)]' : 'text-white/60 hover:text-primary hover:bg-white/5'}
               `}
             >
               <Icon size={20} />
